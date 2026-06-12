@@ -1,0 +1,161 @@
+{
+    "description": "Enable Cut through ⌘X in Finder",
+    "manipulators": [
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com.apple.finder$"
+                    ],
+                    "type": "frontmost_application_if"
+                },
+                {
+                    "name": "finder_is_in_cut_mode",
+                    "type": "variable_unless",
+                    "value": 1
+                }
+            ],
+            "description": "Internal: Cmd+X -> Activate 'cut' mode (if not already active)",
+            "from": {
+                "key_code": "x",
+                "modifiers": { "mandatory": ["command"] }
+            },
+            "to": [
+                { "key_code": "vk_none" },
+                {
+                    "key_code": "c",
+                    "modifiers": ["command"]
+                },
+                {
+                    "set_variable": {
+                        "name": "finder_is_in_cut_mode",
+                        "value": 1
+                    }
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com.apple.finder$"
+                    ],
+                    "type": "frontmost_application_if"
+                },
+                {
+                    "name": "finder_is_in_cut_mode",
+                    "type": "variable_if",
+                    "value": 1
+                }
+            ],
+            "description": "Internal: Cmd+X -> Cancel 'cut' mode (if already active)",
+            "from": {
+                "key_code": "x",
+                "modifiers": { "mandatory": ["command"] }
+            },
+            "to": [
+                { "key_code": "vk_none" },
+                {
+                    "set_variable": {
+                        "name": "finder_is_in_cut_mode",
+                        "value": 0
+                    }
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com.apple.finder$"
+                    ],
+                    "type": "frontmost_application_if"
+                },
+                {
+                    "name": "finder_is_in_cut_mode",
+                    "type": "variable_if",
+                    "value": 1
+                }
+            ],
+            "description": "Internal: Cmd+V -> 'Move' if in 'cut' mode",
+            "from": {
+                "key_code": "v",
+                "modifiers": { "mandatory": ["command"] }
+            },
+            "to": [
+                {
+                    "key_code": "v",
+                    "modifiers": ["command", "option"]
+                },
+                {
+                    "set_variable": {
+                        "name": "finder_is_in_cut_mode",
+                        "value": 0
+                    }
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com.apple.finder$"
+                    ],
+                    "type": "frontmost_application_if"
+                },
+                {
+                    "name": "finder_is_in_cut_mode",
+                    "type": "variable_if",
+                    "value": 1
+                }
+            ],
+            "description": "Internal: Cmd+C -> Cancel 'cut' mode by starting a new copy",
+            "from": {
+                "key_code": "c",
+                "modifiers": { "mandatory": ["command"] }
+            },
+            "to": [
+                {
+                    "key_code": "c",
+                    "modifiers": ["command"]
+                },
+                {
+                    "set_variable": {
+                        "name": "finder_is_in_cut_mode",
+                        "value": 0
+                    }
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com.apple.finder$"
+                    ],
+                    "type": "frontmost_application_if"
+                },
+                {
+                    "name": "finder_is_in_cut_mode",
+                    "type": "variable_if",
+                    "value": 1
+                }
+            ],
+            "description": "Internal: Escape -> Cancel 'cut' mode",
+            "from": { "key_code": "escape" },
+            "to": [
+                {
+                    "set_variable": {
+                        "name": "finder_is_in_cut_mode",
+                        "value": 0
+                    }
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "description": "Caps Lock: Tap = Raycast, Hold = Hyper Key | Replicates Dedicated Hyperkey App",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "caps_lock",
+                "modifiers": { "optional": ["any"] }
+            },
+            "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
+            "to": [
+                {
+                    "key_code": "left_shift",
+                    "modifiers": ["left_command", "left_control", "left_option"]
+                }
+            ],
+            "to_if_alone": [
+                {
+                    "key_code": "spacebar",
+                    "modifiers": ["left_option"]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
